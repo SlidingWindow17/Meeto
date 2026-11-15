@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:ital,wght@0,100..900;1,100..900&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+@import "tailwindcss";
+
+@theme {
+    --color-primary: #004cff;
+    --color-primary-hover: #0033ad;
+    --color-primary-light: #d9e4ff;
+    --color-primary-border: #7a9cff;
+}
+@layer base {
+    * {
+        font-family: "Urbanist", sans-serif;
+        box-sizing: border-box;
+    }
+
+    body {
+        @apply bg-slate-50 text-slate-900 antialiased min-h-screen selection:bg-primary/20 selection:text-primary-hover;
+    }
+}
+
+/* Custom Scrollbar for Light Mode */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Remove Clerk branding & watermarks */
+.cl-watermark,
+.cl-internal-b3fm6y,
+[data-localization-key="badge__securedByClerk"],
+div[class*="cl-watermark"],
+div[data-clerk-watermark],
+a[href*="clerk.com"] {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+/* ── Prism Syntax Highlighting (Light GitHub / VS Code Theme) ── */
+.token.comment,
+.token.block-comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+    color: #6a737d !important;
+    font-style: italic;
+}
+
+.token.punctuation {
+    color: #24292e !important;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.function-name,
+.token.constant,
+.token.symbol {
+    color: #005cc5 !important;
+    font-weight: 600;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin {
+    color: #22863a !important;
+    font-weight: 500;
+}
+
+.token.operator,
+.token.entity,
+.token.url {
+    color: #d73a49 !important;
+}
+
+.token.keyword {
+    color: #d73a49 !important;
+    font-weight: 700;
+}
+
+.token.class-name,
+.token.type {
+    color: #6f42c1 !important;
+    font-weight: 600;
+}
+
+.token.function {
+    color: #6f42c1 !important;
+    font-weight: 600;
+}
+
+.token.macro,
+.token.directive-hash,
+.token.directive {
+    color: #d73a49 !important;
+    font-weight: 600;
+}
+
+.token.header,
+.token.string-property {
+    color: #032f62 !important;
+}
+
+.token.variable {
+    color: #e36209 !important;
+}
+
+/* Monaco Remote Peer Line Highlight */
+.remote-peer-line {
+    background-color: rgba(59, 130, 246, 0.08) !important;
+    border-left: 3px solid #3b82f6 !important;
+}

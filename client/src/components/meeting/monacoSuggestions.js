@@ -1,0 +1,393 @@
+// Comprehensive Auto-suggestions and snippets for C++ and Java in Monaco Editor
+
+export function registerMonacoLanguageProviders(monaco) {
+  if (!monaco || monaco.__meetoProvidersRegistered) return;
+  monaco.__meetoProvidersRegistered = true;
+
+  // ─── C++ COMPLETION PROVIDER ───────────────────────────────────────────────
+  monaco.languages.registerCompletionItemProvider("cpp", {
+    provideCompletionItems: (model, position) => {
+      const word = model.getWordUntilPosition(position);
+      const range = {
+        startLineNumber: position.lineNumber,
+        endLineNumber: position.lineNumber,
+        startColumn: word.startColumn,
+        endColumn: word.endColumn,
+      };
+
+      const suggestions = [
+        // Snippets
+        {
+          label: "main",
+          kind: monaco.languages.CompletionItemKind.Snippet,
+          insertText: "int main() {\n\t${0}\n\treturn 0;\n}",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "main function entry point",
+          documentation: "Standard C++ main function",
+          range,
+        },
+        {
+          label: "cout",
+          kind: monaco.languages.CompletionItemKind.Snippet,
+          insertText: "cout << ${1:\"output\"} << endl;",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "std::cout stream output",
+          documentation: "Print to standard output",
+          range,
+        },
+        {
+          label: "cin",
+          kind: monaco.languages.CompletionItemKind.Snippet,
+          insertText: "cin >> ${1:variable};",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "std::cin stream input",
+          documentation: "Read from standard input",
+          range,
+        },
+        {
+          label: "endl",
+          kind: monaco.languages.CompletionItemKind.Keyword,
+          insertText: "endl",
+          detail: "std::endl newline",
+          range,
+        },
+        {
+          label: "for",
+          kind: monaco.languages.CompletionItemKind.Snippet,
+          insertText: "for (int ${1:i} = 0; ${1:i} < ${2:n}; ${1:i}++) {\n\t${0}\n}",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "for loop (0 to n)",
+          range,
+        },
+        {
+          label: "forr",
+          kind: monaco.languages.CompletionItemKind.Snippet,
+          insertText: "for (auto &${1:item} : ${2:container}) {\n\t${0}\n}",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "range-based for loop",
+          range,
+        },
+        {
+          label: "while",
+          kind: monaco.languages.CompletionItemKind.Snippet,
+          insertText: "while (${1:/* condition */}) {\n\t${0}\n}",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "while loop",
+          range,
+        },
+        {
+          label: "if",
+          kind: monaco.languages.CompletionItemKind.Snippet,
+          insertText: "if (${1:/* condition */}) {\n\t${0}\n}",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "if statement",
+          range,
+        },
+        {
+          label: "ifelse",
+          kind: monaco.languages.CompletionItemKind.Snippet,
+          insertText: "if (${1:/* condition */}) {\n\t${2}\n} else {\n\t${0}\n}",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "if-else statement",
+          range,
+        },
+        {
+          label: "vector",
+          kind: monaco.languages.CompletionItemKind.Snippet,
+          insertText: "vector<${1:int}> ${2:v};",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "std::vector<T>",
+          range,
+        },
+        {
+          label: "string",
+          kind: monaco.languages.CompletionItemKind.Snippet,
+          insertText: "string ${1:str} = \"${2}\";",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "std::string",
+          range,
+        },
+        {
+          label: "pair",
+          kind: monaco.languages.CompletionItemKind.Snippet,
+          insertText: "pair<${1:int}, ${2:int}> ${3:p};",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "std::pair<T1, T2>",
+          range,
+        },
+        {
+          label: "map",
+          kind: monaco.languages.CompletionItemKind.Snippet,
+          insertText: "map<${1:string}, ${2:int}> ${3:mp};",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "std::map<Key, Value>",
+          range,
+        },
+        {
+          label: "unordered_map",
+          kind: monaco.languages.CompletionItemKind.Snippet,
+          insertText: "unordered_map<${1:string}, ${2:int}> ${3:mp};",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "std::unordered_map<Key, Value>",
+          range,
+        },
+        {
+          label: "set",
+          kind: monaco.languages.CompletionItemKind.Snippet,
+          insertText: "set<${1:int}> ${2:st};",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "std::set<T>",
+          range,
+        },
+        {
+          label: "sort",
+          kind: monaco.languages.CompletionItemKind.Snippet,
+          insertText: "sort(${1:v}.begin(), ${1:v}.end());",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "std::sort() algorithm",
+          range,
+        },
+        {
+          label: "reverse",
+          kind: monaco.languages.CompletionItemKind.Snippet,
+          insertText: "reverse(${1:v}.begin(), ${1:v}.end());",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "std::reverse() algorithm",
+          range,
+        },
+        {
+          label: "push_back",
+          kind: monaco.languages.CompletionItemKind.Method,
+          insertText: "push_back(${1:val});",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "vector.push_back()",
+          range,
+        },
+        {
+          label: "pop_back",
+          kind: monaco.languages.CompletionItemKind.Method,
+          insertText: "pop_back()",
+          detail: "vector.pop_back()",
+          range,
+        },
+        {
+          label: "size",
+          kind: monaco.languages.CompletionItemKind.Method,
+          insertText: "size()",
+          detail: "container.size()",
+          range,
+        },
+        {
+          label: "empty",
+          kind: monaco.languages.CompletionItemKind.Method,
+          insertText: "empty()",
+          detail: "container.empty()",
+          range,
+        },
+        {
+          label: "clear",
+          kind: monaco.languages.CompletionItemKind.Method,
+          insertText: "clear()",
+          detail: "container.clear()",
+          range,
+        },
+        {
+          label: "include_iostream",
+          kind: monaco.languages.CompletionItemKind.Snippet,
+          insertText: "#include <iostream>",
+          detail: "#include <iostream>",
+          range,
+        },
+        {
+          label: "include_bits",
+          kind: monaco.languages.CompletionItemKind.Snippet,
+          insertText: "#include <bits/stdc++.h>\nusing namespace std;",
+          detail: "All C++ headers (#include <bits/stdc++.h>)",
+          range,
+        },
+        {
+          label: "using_namespace_std",
+          kind: monaco.languages.CompletionItemKind.Snippet,
+          insertText: "using namespace std;",
+          detail: "using namespace std;",
+          range,
+        },
+        {
+          label: "struct",
+          kind: monaco.languages.CompletionItemKind.Snippet,
+          insertText: "struct ${1:Node} {\n\t${2:int val};\n\t${1:Node}* next;\n\t${1:Node}(${2:int val}) : val(val), next(nullptr) {}\n};",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "struct declaration with constructor",
+          range,
+        },
+      ];
+
+      return { suggestions };
+    },
+  });
+
+  // ─── JAVA COMPLETION PROVIDER ──────────────────────────────────────────────
+  monaco.languages.registerCompletionItemProvider("java", {
+    provideCompletionItems: (model, position) => {
+      const word = model.getWordUntilPosition(position);
+      const range = {
+        startLineNumber: position.lineNumber,
+        endLineNumber: position.lineNumber,
+        startColumn: word.startColumn,
+        endColumn: word.endColumn,
+      };
+
+      const suggestions = [
+        {
+          label: "sout",
+          kind: monaco.languages.CompletionItemKind.Snippet,
+          insertText: "System.out.println(${1:\"output\"});",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "System.out.println()",
+          documentation: "Print a line to standard output",
+          range,
+        },
+        {
+          label: "System.out.println",
+          kind: monaco.languages.CompletionItemKind.Snippet,
+          insertText: "System.out.println(${1});",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "System.out.println()",
+          range,
+        },
+        {
+          label: "System.out.print",
+          kind: monaco.languages.CompletionItemKind.Snippet,
+          insertText: "System.out.print(${1});",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "System.out.print()",
+          range,
+        },
+        {
+          label: "main",
+          kind: monaco.languages.CompletionItemKind.Snippet,
+          insertText: "public static void main(String[] args) {\n\t${0}\n}",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "public static void main(String[] args)",
+          documentation: "Java main method entry point",
+          range,
+        },
+        {
+          label: "Scanner",
+          kind: monaco.languages.CompletionItemKind.Snippet,
+          insertText: "Scanner ${1:scanner} = new Scanner(System.in);",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "Scanner scanner = new Scanner(System.in)",
+          documentation: "Read console input in Java",
+          range,
+        },
+        {
+          label: "for",
+          kind: monaco.languages.CompletionItemKind.Snippet,
+          insertText: "for (int ${1:i} = 0; ${1:i} < ${2:n}; ${1:i}++) {\n\t${0}\n}",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "for loop",
+          range,
+        },
+        {
+          label: "fore",
+          kind: monaco.languages.CompletionItemKind.Snippet,
+          insertText: "for (${1:String} ${2:item} : ${3:collection}) {\n\t${0}\n}",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "enhanced for-each loop",
+          range,
+        },
+        {
+          label: "while",
+          kind: monaco.languages.CompletionItemKind.Snippet,
+          insertText: "while (${1:/* condition */}) {\n\t${0}\n}",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "while loop",
+          range,
+        },
+        {
+          label: "if",
+          kind: monaco.languages.CompletionItemKind.Snippet,
+          insertText: "if (${1:/* condition */}) {\n\t${0}\n}",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "if statement",
+          range,
+        },
+        {
+          label: "ifelse",
+          kind: monaco.languages.CompletionItemKind.Snippet,
+          insertText: "if (${1:/* condition */}) {\n\t${2}\n} else {\n\t${0}\n}",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "if-else statement",
+          range,
+        },
+        {
+          label: "ArrayList",
+          kind: monaco.languages.CompletionItemKind.Snippet,
+          insertText: "ArrayList<${1:String}> ${2:list} = new ArrayList<>();",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "ArrayList<T> list = new ArrayList<>()",
+          range,
+        },
+        {
+          label: "HashMap",
+          kind: monaco.languages.CompletionItemKind.Snippet,
+          insertText: "HashMap<${1:String}, ${2:Integer}> ${3:map} = new HashMap<>();",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "HashMap<K, V> map = new HashMap<>()",
+          range,
+        },
+        {
+          label: "HashSet",
+          kind: monaco.languages.CompletionItemKind.Snippet,
+          insertText: "HashSet<${1:String}> ${2:set} = new HashSet<>();",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "HashSet<T> set = new HashSet<>()",
+          range,
+        },
+        {
+          label: "class",
+          kind: monaco.languages.CompletionItemKind.Snippet,
+          insertText: "public class ${1:Main} {\n\t${0}\n}",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "class declaration",
+          range,
+        },
+        {
+          label: "trycatch",
+          kind: monaco.languages.CompletionItemKind.Snippet,
+          insertText: "try {\n\t${1}\n} catch (Exception e) {\n\te.printStackTrace();\n}",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "try-catch block",
+          range,
+        },
+        {
+          label: "Integer.parseInt",
+          kind: monaco.languages.CompletionItemKind.Method,
+          insertText: "Integer.parseInt(${1:str})",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "Integer.parseInt()",
+          range,
+        },
+        {
+          label: "Collections.sort",
+          kind: monaco.languages.CompletionItemKind.Method,
+          insertText: "Collections.sort(${1:list});",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "Collections.sort()",
+          range,
+        },
+        {
+          label: "Arrays.sort",
+          kind: monaco.languages.CompletionItemKind.Method,
+          insertText: "Arrays.sort(${1:arr});",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "Arrays.sort()",
+          range,
+        },
+      ];
+
+      return { suggestions };
+    },
+  });
+}
